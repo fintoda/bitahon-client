@@ -1,6 +1,5 @@
 import {APP_ID, wallet} from '@bitahon/protocol';
-
-import crypto from '../crypto';
+import crypto from '@bitahon/crypto';
 
 import {IAction} from './types';
 

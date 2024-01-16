@@ -1,7 +1,7 @@
 {
-  "name": "@bitahon/client",
+  "name": "@bitahon/browser-crypto",
   "version": "1.0.0",
-  "description": "Bitahon Protocol Client",
+  "description": "Bitahon Browser Crypto Provider",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -36,6 +36,11 @@
   ],
   "dependencies": {
     "@bitahon/crypto": "^1.0.0",
-    "@bitahon/protocol": "^1.0.0"
+    "crypto-js": "^4.2.0",
+    "tiny-secp256k1": "^2.2.3",
+    "varuint-bitcoin": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.1"
   }
 }

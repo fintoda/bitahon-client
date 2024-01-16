@@ -11,6 +11,9 @@
   "references": [
     {
       "path": "../protocol/tsconfig.cjs.json"
+    },
+    {
+      "path": "../crypto/tsconfig.cjs.json"
     }
   ]
 }

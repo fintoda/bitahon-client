@@ -1,4 +1,4 @@
-import crypto from './crypto';
+import crypto from '@bitahon/crypto';
 
 const HIGHEST_BIT = 0x80000000;
 const UINT31_MAX = HIGHEST_BIT - 1;

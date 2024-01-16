@@ -1,4 +1,5 @@
 import {transport, session} from '@bitahon/protocol';
+import crypto from '@bitahon/crypto';
 
 import {IAction} from './actions/types';
 import {
@@ -6,7 +7,6 @@ import {
   NewSessionParams,
   NewSessionResult,
 } from './actions/wallet';
-import crypto from './crypto';
 
 export interface IClientConnectionProvider {
   send(data: Buffer): Promise<Buffer>;

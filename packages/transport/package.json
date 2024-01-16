@@ -1,7 +1,7 @@
 {
-  "name": "@bitahon/client",
+  "name": "@bitahon/transport",
   "version": "1.0.0",
-  "description": "Bitahon Protocol Client",
+  "description": "Bitahon Protocol Transport",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -36,6 +36,9 @@
   ],
   "dependencies": {
     "@bitahon/crypto": "^1.0.0",
-    "@bitahon/protocol": "^1.0.0"
+    "pako": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/pako": "^2.0.3"
   }
 }

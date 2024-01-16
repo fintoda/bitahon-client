@@ -1,6 +1,6 @@
 import pako from 'pako';
 
-import crypto from './crypto';
+import crypto from '@bitahon/crypto';
 
 export type ChunkData = {
   v: number;
