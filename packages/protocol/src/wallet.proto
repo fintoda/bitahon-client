@@ -1,0 +1,14 @@
+syntax = "proto3";
+package wallet;
+
+message NewSession {
+  string title = 1;
+  string description = 2;
+  bytes sign = 3;
+}
+
+message NewSessionResult {
+  bytes wallet = 1;
+  bytes proof = 2;
+  bytes sign = 3;
+}

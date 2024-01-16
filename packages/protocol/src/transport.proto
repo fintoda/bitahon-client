@@ -1,0 +1,7 @@
+syntax = "proto3";
+package transport;
+
+message ApiTransport {
+  bytes data = 1;
+  optional bytes sign = 2;
+}

@@ -1,0 +1,102 @@
+{
+  "nested": {
+    "session": {
+      "nested": {
+        "ApiRequest": {
+          "fields": {
+            "id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "app": {
+              "type": "uint32",
+              "id": 2
+            },
+            "method": {
+              "type": "uint32",
+              "id": 3
+            },
+            "params": {
+              "type": "bytes",
+              "id": 4
+            }
+          }
+        },
+        "ApiResponse": {
+          "fields": {
+            "id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "result": {
+              "type": "bytes",
+              "id": 2
+            }
+          }
+        }
+      }
+    },
+    "transport": {
+      "nested": {
+        "ApiTransport": {
+          "oneofs": {
+            "_sign": {
+              "oneof": [
+                "sign"
+              ]
+            }
+          },
+          "fields": {
+            "data": {
+              "type": "bytes",
+              "id": 1
+            },
+            "sign": {
+              "type": "bytes",
+              "id": 2,
+              "options": {
+                "proto3_optional": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "wallet": {
+      "nested": {
+        "NewSession": {
+          "fields": {
+            "title": {
+              "type": "string",
+              "id": 1
+            },
+            "description": {
+              "type": "string",
+              "id": 2
+            },
+            "sign": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "NewSessionResult": {
+          "fields": {
+            "wallet": {
+              "type": "bytes",
+              "id": 1
+            },
+            "proof": {
+              "type": "bytes",
+              "id": 2
+            },
+            "sign": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        }
+      }
+    }
+  }
+}
