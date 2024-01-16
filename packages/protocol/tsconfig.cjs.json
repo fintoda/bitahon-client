@@ -2,7 +2,7 @@
   "extends": "../../config/tsconfig.cjs.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "lib/cjs",
+    "outDir": "dist/cjs",
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
