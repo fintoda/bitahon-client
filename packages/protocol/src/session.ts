@@ -1,15 +1,9 @@
 import protocol from './protocol';
-
-export enum WalletApp {
-  WALLET = 1,
-  BITCOIN = 2,
-  ETHEREUM = 3,
-  TRON = 4,
-}
+import {APP_ID} from './types';
 
 export interface IApiRequest {
   id: number;
-  app: WalletApp;
+  app: APP_ID;
   method: number;
   params: Uint8Array;
 }

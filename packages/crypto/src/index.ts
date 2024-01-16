@@ -1,4 +1,3 @@
-import {Buffer} from 'buffer';
 import CryptoJS from 'crypto-js';
 import * as secp256k1 from 'tiny-secp256k1';
 import varuint from 'varuint-bitcoin';

@@ -1,7 +1,7 @@
 import {IBip32Path, ITokenMetadata} from './common';
 import protocol from './protocol';
 
-export enum MethodID {
+export enum METHOD_ID {
   GET_PUBLIC_KEY = 1,
   SIGN_PERSONAL_MESSAGE = 2,
   SIGN_TRANSACTION = 3,
@@ -31,7 +31,7 @@ export interface ISignTransaction {
   network: number;
   path: IBip32Path;
   rawTx: Uint8Array;
-  tokens: ITokenMetadata;
+  tokens: ITokenMetadata[];
 }
 
 export const SignTransaction = protocol.lookupType('tron.SignTransaction');

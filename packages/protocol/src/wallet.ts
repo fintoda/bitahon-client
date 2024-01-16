@@ -1,6 +1,6 @@
 import protocol from './protocol';
 
-export enum MethodID {
+export enum METHOD_ID {
   NEW_SESSION = 1,
 }
 

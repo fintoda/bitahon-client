@@ -80,8 +80,13 @@ export function decodeECDSASignResult(data: Uint8Array): IECDSASignResult {
   ) as IECDSASignResult;
 }
 
+export enum TokenType {
+  FT = 1,
+  NFT = 2,
+}
+
 export interface ITokenMetadata {
-  type: number;
+  type: TokenType;
   contract: string;
   chainId: number;
   name: string;

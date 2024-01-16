@@ -1,7 +1,7 @@
 import {IBip32Path} from './common';
 import protocol from './protocol';
 
-export enum MethodID {
+export enum METHOD_ID {
   GET_PUBLIC_KEY = 1,
   SIGN_MESSAGE = 2,
   SIGN_TRANSACTION = 3,

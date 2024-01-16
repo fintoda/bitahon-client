@@ -4,7 +4,7 @@
   "description": "Bitahon Protocol Client",
   "private": true,
   "scripts": {
-    "build": "npm run build --ws",
+    "build:all": "npm run build --ws",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
