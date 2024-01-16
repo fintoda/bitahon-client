@@ -1,0 +1,46 @@
+{
+  "name": "@bitahon/crypto",
+  "version": "1.0.0",
+  "description": "Bitahon Client Crypto Provider",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --build ./tsconfig.cjs.json",
+    "build:esm": "tsc --build ./tsconfig.esm.json",
+    "format": "prettier --write \"src/**/*.(js|ts)\"",
+    "lint": "eslint src --ext .js,.ts",
+    "lint:fix": "eslint src --fix --ext .js,.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fintoda/bitahon-client.git"
+  },
+  "author": "Fintoda Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fintoda/bitahon-client/issues"
+  },
+  "homepage": "https://github.com/fintoda/bitahon-client#readme",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "crypto-js": "^4.2.0",
+    "tiny-secp256k1": "^2.2.3",
+    "varuint-bitcoin": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.1"
+  }
+}
