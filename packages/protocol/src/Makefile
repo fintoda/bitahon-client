@@ -1,4 +1,4 @@
 all: protocol
 
 protocol:
-	pbjs -t json *.proto > protocol.json
+	pbjs -t json protos/*.proto > protocol.json

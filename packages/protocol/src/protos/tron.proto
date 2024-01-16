@@ -1,0 +1,17 @@
+syntax = "proto3";
+package tron;
+
+import "common.proto";
+
+message SignPersonalMessage {
+  uint32 network = 1;
+  Bip32Path path = 2;
+  bytes msg = 3;
+}
+
+message SignTransaction {
+  uint32 network = 1;
+  Bip32Path path = 2;
+  bytes rawTx = 3;
+  repeated TokenMetadata tokens = 4;
+}

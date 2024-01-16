@@ -1,0 +1,37 @@
+syntax = "proto3";
+package common;
+
+message Bip32Path {
+  repeated uint32 value = 1;
+  uint32 curve = 2;
+}
+
+message GetPublicKey {
+  uint32 network = 1;
+  Bip32Path path = 2;
+}
+
+message GetPublicKeyResult {
+  uint32 depth = 1;
+  uint32 index = 2;
+  bytes publicKey = 3;
+  bytes chainCode = 4;
+  uint32 fingerprint = 5;
+}
+
+message ECDSASignResult {
+  uint32 v = 1;
+  bytes r = 2;
+  bytes s = 3;
+}
+
+message TokenMetadata {
+  uint32 type = 1;
+  string contract = 2;
+  uint32 chainId = 3;
+  string name = 4;
+  string symbol = 5;
+  optional uint32 decimals = 6;
+  optional bytes icon = 7;
+  bytes sign = 8;
+}

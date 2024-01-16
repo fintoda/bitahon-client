@@ -1,0 +1,22 @@
+syntax = "proto3";
+package bitcoin;
+
+import "common.proto";
+
+message SignMessage {
+  uint32 network = 1;
+  Bip32Path path = 2;
+  bytes msg = 3;
+}
+
+message SignTransaction {
+  uint32 network = 1;
+  bytes psbt = 2;
+  map<uint32, Bip32Path> paths = 3;
+  map<uint32, Bip32Path> changePaths = 4;
+  bool finalize = 5;
+}
+
+message SignTransactionResult {
+  bytes tx = 1;
+}

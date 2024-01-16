@@ -1,0 +1,30 @@
+syntax = "proto3";
+package ethereum;
+
+import "common.proto";
+
+message SignPersonalMessage {
+  uint32 network = 1;
+  Bip32Path path = 2;
+  bytes msg = 3;
+}
+
+message SignEIP712Message {
+  uint32 network = 1;
+  Bip32Path path = 2;
+  string msg = 3;
+}
+
+message SignEIP712HashedMessage {
+  uint32 network = 1;
+  Bip32Path path = 2;
+  bytes domainHash = 3;
+  bytes messageHash = 4;
+}
+
+message SignTransaction {
+  uint32 network = 1;
+  Bip32Path path = 2;
+  bytes rawTx = 3;
+  repeated TokenMetadata tokens = 4;
+}

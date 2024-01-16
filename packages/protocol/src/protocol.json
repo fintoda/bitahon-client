@@ -1,5 +1,259 @@
 {
   "nested": {
+    "bitcoin": {
+      "nested": {
+        "SignMessage": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            },
+            "msg": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "SignTransaction": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "psbt": {
+              "type": "bytes",
+              "id": 2
+            },
+            "paths": {
+              "keyType": "uint32",
+              "type": "Bip32Path",
+              "id": 3
+            },
+            "changePaths": {
+              "keyType": "uint32",
+              "type": "Bip32Path",
+              "id": 4
+            },
+            "finalize": {
+              "type": "bool",
+              "id": 5
+            }
+          }
+        },
+        "SignTransactionResult": {
+          "fields": {
+            "tx": {
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        }
+      }
+    },
+    "common": {
+      "nested": {
+        "Bip32Path": {
+          "fields": {
+            "value": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 1
+            },
+            "curve": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "GetPublicKey": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            }
+          }
+        },
+        "GetPublicKeyResult": {
+          "fields": {
+            "depth": {
+              "type": "uint32",
+              "id": 1
+            },
+            "index": {
+              "type": "uint32",
+              "id": 2
+            },
+            "publicKey": {
+              "type": "bytes",
+              "id": 3
+            },
+            "chainCode": {
+              "type": "bytes",
+              "id": 4
+            },
+            "fingerprint": {
+              "type": "uint32",
+              "id": 5
+            }
+          }
+        },
+        "ECDSASignResult": {
+          "fields": {
+            "v": {
+              "type": "uint32",
+              "id": 1
+            },
+            "r": {
+              "type": "bytes",
+              "id": 2
+            },
+            "s": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "TokenMetadata": {
+          "oneofs": {
+            "_decimals": {
+              "oneof": [
+                "decimals"
+              ]
+            },
+            "_icon": {
+              "oneof": [
+                "icon"
+              ]
+            }
+          },
+          "fields": {
+            "type": {
+              "type": "uint32",
+              "id": 1
+            },
+            "contract": {
+              "type": "string",
+              "id": 2
+            },
+            "chainId": {
+              "type": "uint32",
+              "id": 3
+            },
+            "name": {
+              "type": "string",
+              "id": 4
+            },
+            "symbol": {
+              "type": "string",
+              "id": 5
+            },
+            "decimals": {
+              "type": "uint32",
+              "id": 6,
+              "options": {
+                "proto3_optional": true
+              }
+            },
+            "icon": {
+              "type": "bytes",
+              "id": 7,
+              "options": {
+                "proto3_optional": true
+              }
+            },
+            "sign": {
+              "type": "bytes",
+              "id": 8
+            }
+          }
+        }
+      }
+    },
+    "ethereum": {
+      "nested": {
+        "SignPersonalMessage": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            },
+            "msg": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "SignEIP712Message": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            },
+            "msg": {
+              "type": "string",
+              "id": 3
+            }
+          }
+        },
+        "SignEIP712HashedMessage": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            },
+            "domainHash": {
+              "type": "bytes",
+              "id": 3
+            },
+            "messageHash": {
+              "type": "bytes",
+              "id": 4
+            }
+          }
+        },
+        "SignTransaction": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            },
+            "rawTx": {
+              "type": "bytes",
+              "id": 3
+            },
+            "tokens": {
+              "rule": "repeated",
+              "type": "TokenMetadata",
+              "id": 4
+            }
+          }
+        }
+      }
+    },
     "session": {
       "nested": {
         "ApiRequest": {
@@ -57,6 +311,47 @@
               "options": {
                 "proto3_optional": true
               }
+            }
+          }
+        }
+      }
+    },
+    "tron": {
+      "nested": {
+        "SignPersonalMessage": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            },
+            "msg": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "SignTransaction": {
+          "fields": {
+            "network": {
+              "type": "uint32",
+              "id": 1
+            },
+            "path": {
+              "type": "Bip32Path",
+              "id": 2
+            },
+            "rawTx": {
+              "type": "bytes",
+              "id": 3
+            },
+            "tokens": {
+              "rule": "repeated",
+              "type": "TokenMetadata",
+              "id": 4
             }
           }
         }

@@ -1,5 +1,9 @@
 import protocol from './protocol';
 
+export enum MethodID {
+  NEW_SESSION = 1,
+}
+
 export interface INewSession {
   title: string;
   description: string;
