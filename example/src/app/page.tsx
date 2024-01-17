@@ -1,106 +1,53 @@
 "use client"
-
 import React from 'react'
-import Image from 'next/image'
-import styles from './page.module.css'
+import {Provider, useSession} from '@/lib/session';
+import AppBar from '@/components/AppBar';
+import SessionStart from '@/components/SessionStart';
+import {initCryptoProvider} from '@bitahon/crypto';
+import { CircularProgress, Container } from '@mui/material';
+import SplashView from '@/components/SplashView';
 
-import {transport} from '@bitahon/protocol'
+async function loadCrypto() {
+  const lib = await import('@bitahon/browser-crypto');
+  initCryptoProvider(lib.default);
+}
+
+function Content() {
+  const [session] = useSession();
+  return session ? (
+    <SplashView>
+      <div className="text-center">TODO</div>
+    </SplashView>
+  ) : (
+    <SessionStart />
+  )
+}
 
 export default function Home() {
+  const [isCryptoReady, setIsCryptoReady] = React.useState(false);
+
   React.useEffect(() => {
-    console.log(transport.encodeApiTransport({
-      data: new Uint8Array([0, 1, 2, 3]),
-    }));
-  }, []);
+    loadCrypto()
+      .then(() => {
+        setIsCryptoReady(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [isCryptoReady]);
 
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main className="main">
+      {isCryptoReady ? (
+        <Provider>
+          <AppBar />
+          <Content />
+        </Provider>
+      ) : (
+        <Container sx={{display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <CircularProgress size={48} />
+        </Container>
+      )}
     </main>
   )
 }
