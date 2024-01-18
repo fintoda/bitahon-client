@@ -23,4 +23,5 @@ Below you can find a list of the packages included in this repository.
   protocol --> client
   crypto --> client
   crypto --> transport
+  crypto --> browser-crypto
 ```
