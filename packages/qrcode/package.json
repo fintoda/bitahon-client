@@ -1,0 +1,49 @@
+{
+  "name": "@bitahon/qrcode",
+  "version": "1.0.0",
+  "description": "Bitahon Protocol QR Code",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --build ./tsconfig.cjs.json",
+    "build:esm": "tsc --build ./tsconfig.esm.json",
+    "format": "prettier --write \"src/**/*.(js|ts)\"",
+    "lint": "eslint src --ext .js,.ts",
+    "lint:fix": "eslint src --fix --ext .js,.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fintoda/bitahon-client.git"
+  },
+  "author": "Fintoda Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fintoda/bitahon-client/issues"
+  },
+  "homepage": "https://github.com/fintoda/bitahon-client#readme",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@bitahon/transport": "^1.0.0",
+    "html5-qrcode": "^2.3.8",
+    "qrcode.react": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18"
+  },
+  "peerDependencies": {
+    "react": "^18"
+  }
+}

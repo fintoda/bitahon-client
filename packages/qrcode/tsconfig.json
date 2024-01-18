@@ -1,0 +1,15 @@
+{
+  "extends": "../../config/tsconfig.esm.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist/esm",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "jsx": "preserve"
+  },
+  "include": ["src", "src/**/*.json"],
+  "exclude": ["node_modules", "**/__tests__/*"]
+}
+
+    
+    
