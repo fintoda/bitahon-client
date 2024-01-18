@@ -46,12 +46,12 @@ const payload: Uint8Array = transport.encodeApiTransport({
 
 #### Interfaces
 
-- IApiTransport
+- [IApiTransport](src/transport.ts#L5)
 
 #### Functions
 
-- encodeApiTransport(obj: IApiTransport): Uint8Array
-- decodeApiTransport(data: Uint8Array): IApiTransport
+- [encodeApiTransport(obj: IApiTransport): Uint8Array](src/transport.ts#L10)
+- [decodeApiTransport(data: Uint8Array): IApiTransport](src/transport.ts#L16)
 
 ### session
 
