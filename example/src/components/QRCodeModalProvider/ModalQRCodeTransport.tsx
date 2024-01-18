@@ -9,6 +9,24 @@ import QrCodeResponse from './QrCodeResponse';
 function ModalQRCodeTransport() {
   const [data, close] = useModal<PayloadType, ResultType>(modalQRCode.UID);
   const {visible, payload} = data ?? {};
+
+  if (!visible) {
+    return null;
+  }
+
+  return <ModalQRCodeTransportView close={close} visible={visible} payload={payload} />
+}
+
+export default ModalQRCodeTransport;
+
+interface ModalQRCodeTransportViewProps {
+  visible: boolean;
+  payload: PayloadType;
+  close: (reason: ResultType) => void;
+}
+
+function ModalQRCodeTransportView({visible, close, payload}: ModalQRCodeTransportViewProps) {
+ 
   const [step, setStep] = React.useState<'request' | 'response'>('request');
 
   const closeHandler = React.useCallback(() => {
@@ -42,6 +60,3 @@ function ModalQRCodeTransport() {
     </Modal>
   )
 }
-
-export default ModalQRCodeTransport;
-
