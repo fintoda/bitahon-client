@@ -42,4 +42,27 @@ const payload: Uint8Array = transport.encodeApiTransport({
 
 ## API
 
+### transport
+
+#### Interfaces
+
+- IApiTransport
+
+#### Functions
+
+- encodeApiTransport(obj: IApiTransport): Uint8Array
+- decodeApiTransport(data: Uint8Array): IApiTransport
+
+### session
+
+### wallet
+
+### common
+
+### bitcoin
+
+### ethereum
+
+### tron
+
 ## License
