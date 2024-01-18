@@ -2,8 +2,15 @@ import React from 'react';
 import {Button, CircularProgress} from '@mui/material';
 import SplashView from '@/components/SplashView';
 import { useSession } from '@/lib/session';
+import {bitcoin, ClientSession, Client} from '@bitahon/client';
+import {QRCodeModalProvider} from '@/components/QRCodeModalProvider';
 
-export default function SessionStart() {
+const DATA = {
+  network: 1,
+  path: "m/44'/0'/0'/0/0",
+}
+
+export default function ActionGetPubKey() {
   const [session] = useSession();
   const [submitting, setSubmitting] = React.useState(false);
   
@@ -13,26 +20,17 @@ export default function SessionStart() {
       if (!session) {
         return false;
       }
-      // const action = new bitcoin.GetPublicKeyAction({
-      //   network: 1,
-      //   path: path,
-      // });
-      // const clientSession = ClientSession.fromBuffer(
-      //   Buffer.from(session.session),
-      // );
-      // const client = new Client(new ModalQrCodeProvider(), clientSession);
-      // const response = await client.request(action);
-      // const node = new Bip32Node(response);
-      // const addr = createAddress(addressType.value, node.publicKey, network);
-      // const xpub = createXpub(node, addressType.value, network);
-      // setResponse({
-      //   addr,
-      //   xpub,
-      // });
+      const action = new bitcoin.GetPublicKeyAction(DATA);
+      const clientSession = ClientSession.fromBuffer(
+        Buffer.from(session.session),
+      );
+      const client = new Client(new QRCodeModalProvider(), clientSession);
+      const response = await client.request(action);
+      console.log(response)
     } catch (err) {
       console.error(err);
     } finally {
-      setSubmitting(true);
+      setSubmitting(false);
     }
   };
 
@@ -51,111 +49,3 @@ export default function SessionStart() {
     </SplashView>
   );
 }
-
-
-
-
-
-
-// 'use client';
-// import React from 'react';
-// import {Box, Button, CircularProgress, Stack} from '@mui/material';
-
-// import {createAddress, createXpub} from '@/lib/bitcoin/BitcoinWallet';
-// import networks, {INetwork} from '@/lib/bitcoin/networks';
-// import {toast} from '@/lib/toastify';
-
-// import {Client, ClientSession} from '@/client';
-// 
-// import {Bip32Node} from '@/client/bip32';
-
-// import useSession from '@/features/Session/useSession';
-
-// import Modal from '@/shared/ui/modals/Modal';
-
-// import LabelText from '@/components/LabelText';
-// import ModalQrCodeProvider from '@/components/modals/modalQRCodeProvider';
-// import SelectAddressType from '@/components/SelectAddressType';
-// import SelectNetworks from '@/components/SelectNetworks';
-// import TextFieldBase from '@/components/TextFieldBase';
-
-// import {AddressTypeOption, NetworkOption} from './types';
-
-// const networksOptions: NetworkOption[] = Object.entries(networks).map(
-//   ([networkId, config]) => {
-//     return {
-//       networkId,
-//       ...config,
-//     } as NetworkOption;
-//   },
-// );
-
-// type Response = {
-//   addr: string;
-//   xpub: string;
-// };
-
-// function createAddressesOptions(
-//   address: INetwork['addresses'] | null,
-// ): AddressTypeOption[] {
-//   if (!address) {
-//     return [];
-//   }
-//   return Object.entries(address)
-//     .filter(([, config]) => {
-//       return config;
-//     })
-//     .map(([addressType, config]) => {
-//       return {
-//         value: addressType,
-//         ...config,
-//       } as AddressTypeOption;
-//     });
-// }
-
-// function BitcoinGetPubKeyFormAction() {
-//  
-//   const [loading, setLoading] = React.useState(false);
-//   const [network, setNetwork] = React.useState<NetworkOption | null>(
-//     networksOptions[0],
-//   );
-//   const [addressType, setAddressType] =
-//     React.useState<AddressTypeOption | null>(null);
-//   const [path, setPath] = React.useState('');
-//   const [response, setResponse] = React.useState<Response | null>(null);
-
-//   const changeAddressTypeHandler = (_addrType: AddressTypeOption | null) => {
-//     setAddressType(_addrType);
-//     setPath(_addrType ? `${_addrType.path}/0/0` : '');
-//   };
-
-//   const changeNetworkHandler = (_network: NetworkOption | null) => {
-//     changeAddressTypeHandler(null);
-//     setNetwork(_network);
-//   };
-
-//   const addressTypeOptions = React.useMemo(() => {
-//     return createAddressesOptions(network ? network.addresses : null);
-//   }, [network]);
-
-//   const disableSubmit = loading || !network || !addressType || !path;
-
-
-//   return (
-//     <>
-//       <Modal
-//         visible={!!response}
-//         title="Response"
-//         onClose={() => setResponse(null)}
-//       >
-//         {response ? (
-//           <>
-//             <LabelText label="address:" value={response.addr} />
-//             <LabelText label="xpub:" value={response.xpub} />
-//           </>
-//         ) : null}
-//       </Modal>
-//     </>
-//   );
-// }
-

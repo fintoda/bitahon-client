@@ -5,9 +5,9 @@ import AppBar from '@/components/AppBar';
 import SessionStart from '@/components/SessionStart';
 import {initCryptoProvider} from '@bitahon/crypto';
 import { CircularProgress, Container } from '@mui/material';
-import SplashView from '@/components/SplashView';
 import ProviderModals from '@/lib/modals';
 import {ModalQRCodeTransport} from '@/components/QRCodeModalProvider';
+import ActionGetPubKey from '@/components/ActionGetPubKey';
 
 async function loadCrypto() {
   const lib = await import('@bitahon/browser-crypto');
@@ -17,9 +17,7 @@ async function loadCrypto() {
 function Content() {
   const [session] = useSession();
   return session ? (
-    <SplashView>
-      <div className="text-center">TODO</div>
-    </SplashView>
+    <ActionGetPubKey />
   ) : (
     <SessionStart />
   )
