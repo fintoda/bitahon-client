@@ -91,7 +91,39 @@ console.log(pub);
 - [ClientRequest](src/client.ts)
 - [Client](src/client.ts)
 
-### Actions
+### BIP32
+
+#### Bip32Curve
+
+| Curve | uint32 |
+| --- | --- |
+| secp256k1 | 1 |
+| secp256k1-decred | 2 |
+| secp256k1-groestl | 3 |
+| secp256k1-smart | 4 |
+| nist256p1 | 5 |
+| ed25519 | 6 |
+| ed25519-sha3 | 7 |
+| ed25519-keccak | 8 |
+| curve25519 | 9 |
+
+#### Interfaces
+
+- [IBip32Path](src/bip32.ts)
+- [IBip32Node](src/bip32.ts)
+
+#### Classes
+
+- [Bip32Path](src/bip32.ts)
+- [Bip32Node](src/bip32.ts)
+
+#### Functions
+
+- [parseBip32Path](src/bip32.ts)
+- [validateBip32Path](src/bip32.ts)
+- [createBip32Path](src/bip32.ts)
+
+### Actions Classes
 
 #### wallet
 
