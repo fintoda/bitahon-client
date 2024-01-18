@@ -15,7 +15,13 @@ npm install @bitahon/protocol
 ## Usage
 
 ```ts
-import {APP_ID, common, session, transport} from '@bitahon/protocol';
+import {
+  APP_ID,
+  common,
+  session,
+  transport,
+  bitcoin,
+} from '@bitahon/protocol';
 
 const bip32Path: common.IBip32Path = {
   value: [2147483692, 2147483648, 2147483648, 0, 0], // 44'/0'/0'/0/0
@@ -23,7 +29,7 @@ const bip32Path: common.IBip32Path = {
 };
 
 const params: Uint8Array = common.encodeGetPublicKey({
-  network: 1, // Bitcoin Mainnet
+  network: bitcoin.NETWORK_ID.BITCOIN_MAINNET,
   path: bip32Path,
 });
 
@@ -121,6 +127,16 @@ const payload: Uint8Array = transport.encodeApiTransport({
 
 ### bitcoin
 
+#### NETWORK_ID
+
+| Network | uint32 |
+| --- | --- |
+| BITCOIN_MAINNET | 1 |
+| BITCOIN_TESTNET | 2 |
+| LITECOIN_MAINNET | 3 |
+| LITECOIN_TESTNET | 4 |
+| DOGECOIN_MAINNET | 5 |
+
 #### METHOD_ID
 
 | Method | uint32 |
@@ -145,6 +161,20 @@ const payload: Uint8Array = transport.encodeApiTransport({
 - [decodeSignTransactionResult](src/bitcoin.ts)
 
 ### ethereum
+
+#### NETWORK_ID
+
+| Network | uint32 |
+| --- | --- |
+| ETHEREUM_MAINNET | 1 |
+| ETHEREUM_GOERLI | 2 |
+| POLYGON_MAINNET | 3 |
+| OPTIMISM_MAINNET | 4 |
+| ARBITRUM_MAINNET | 5 |
+| BSC_MAINNET | 6 |
+| AVALANCHE_MAINNET | 7 |
+| WBT_MAINNET | 8 |
+| BASE_MAINNET | 9 |
 
 #### METHOD_ID
 
@@ -175,6 +205,13 @@ const payload: Uint8Array = transport.encodeApiTransport({
 - [decodeSignTransaction](src/ethereum.ts)
 
 ### tron
+
+#### NETWORK_ID
+
+| Network | uint32 |
+| --- | --- |
+| TRON_MAINNET | 1 |
+| TRON_TESTNET | 2 |
 
 #### METHOD_ID
 

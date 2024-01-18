@@ -69,7 +69,7 @@ An example of communication within a session, such as retrieving a public key, c
 import {bitcoin} from '@bitahon/client';
 
 const action = new bitcoin.GetPublicKeyAction({
-  network: 1,
+  network: bitcoin.NETWORK_ID.BITCOIN_TESTNET,
   path: "44'/1'/0'/0/0",
 });
 

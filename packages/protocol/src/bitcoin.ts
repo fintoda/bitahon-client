@@ -1,6 +1,14 @@
 import {IBip32Path} from './common';
 import protocol from './protocol';
 
+export enum NETWORK_ID {
+  BITCOIN_MAINNET = 1,
+  BITCOIN_TESTNET = 2,
+  LITECOIN_MAINNET = 3,
+  LITECOIN_TESTNET = 4,
+  DOGECOIN_MAINNET = 5,
+}
+
 export enum METHOD_ID {
   GET_PUBLIC_KEY = 1,
   SIGN_MESSAGE = 2,
@@ -8,7 +16,7 @@ export enum METHOD_ID {
 }
 
 export interface ISignMessage {
-  network: number;
+  network: NETWORK_ID;
   path: IBip32Path;
   msg: Uint8Array;
 }
@@ -28,7 +36,7 @@ export function decodeSignMessage(data: Uint8Array): ISignMessage {
 }
 
 export interface ISignTransaction {
-  network: number;
+  network: NETWORK_ID;
   psbt: Uint8Array;
   paths: {
     [key: number]: IBip32Path;
