@@ -1,7 +1,7 @@
 export type TSession = {
   proof: Uint8Array;
   session: Uint8Array;
-  wallet: string;
+  wallet: Uint8Array;
 };
 
 export interface IContext {

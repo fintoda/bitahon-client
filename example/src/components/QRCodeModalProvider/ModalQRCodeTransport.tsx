@@ -1,12 +1,15 @@
 import React from 'react';
 import Modal from "@/components/Modal";
-
+import Button from '@mui/material/Button';
 import modalQRCode, {PayloadType, ResultType} from './modalQrCode';
 import { useModal } from "@/lib/modals";
+import QrCodeRequest from './QrCodeRequest';
+import QrCodeResponse from './QrCodeResponse';
 
 function ModalQRCodeTransport() {
   const [data, close] = useModal<PayloadType, ResultType>(modalQRCode.UID);
-  const {visible} = data ?? {};
+  const {visible, payload} = data ?? {};
+  const [step, setStep] = React.useState<'request' | 'response'>('request');
 
   const closeHandler = React.useCallback(() => {
     close({
@@ -15,21 +18,30 @@ function ModalQRCodeTransport() {
     });
   }, [close]);
 
-  // const successHandler = React.useCallback(
-  //   (data: Buffer) => {
-  //     close({
-  //       type: 'success',
-  //       data,
-  //     });
-  //   },
-  //   [close],
-  // );
+  const successHandler = React.useCallback((data: Buffer) => {
+    close({
+      type: 'success',
+      data: data,
+    });
+  }, [close]);
+
+  const title = step  === 'request' ?  'QR Code' : 'Scan QR Code';
+  const showResponse = () => setStep('response');
 
   return (
-    <Modal visible={visible} onClose={closeHandler}>
-      <div>dededefefef</div>
+    <Modal open={visible} title={title} fullWidth={true} maxWidth={'sm'} onClose={closeHandler}
+      footer={step  === 'request' ? (
+        <Button onClick={showResponse}>Next</Button>
+      ): null}
+    >
+       {step === 'response' ? (
+          <QrCodeResponse onResult={successHandler} />
+        ) : (
+          <QrCodeRequest qrcodes={payload.qrcodes} speed={1000} />
+        )}
     </Modal>
   )
 }
 
 export default ModalQRCodeTransport;
+

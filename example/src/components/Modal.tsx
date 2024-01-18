@@ -1,25 +1,24 @@
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import Dialog from '@mui/material/Dialog';
+import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 
-interface ModalProps {
-  visible: boolean;
+interface ModalProps extends DialogProps {
   title?: string;
   onClose: () => void;
   children?: React.ReactNode;
   footer?: React.ReactNode;
 }
 
-function Modal({visible, title = '', onClose, children, footer}: ModalProps) {
+function Modal({title = '', onClose, children, footer, ...rest}: ModalProps) {
   return (
     <Dialog
       onClose={onClose}
       aria-labelledby="modal"
-      open={visible}
+      {...rest}
     >
       <DialogTitle>{title}</DialogTitle>
       <IconButton

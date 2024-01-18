@@ -3,22 +3,21 @@ import {Button, CircularProgress} from '@mui/material';
 import SplashView from '@/components/SplashView';
 import {Client} from '@bitahon/client';
 import {QRCodeModalProvider} from '@/components/QRCodeModalProvider';
-
-console.log(Client)
+import { useSession } from '@/lib/session';
 
 export default function SessionStart() {
+  const [, setSession] = useSession();
   const [submitting, setSubmitting] = React.useState(false);
 
   const startSessionHandler = async () => {
     setSubmitting(true);
     try {
-      // TODO test
       const client = new Client(new QRCodeModalProvider());
       const result = await client.auth({
         title: 'Example Title',
         description: 'Example Description',
       });
-      console.log(result);
+      setSession(result);
     } catch (err) {
       console.error(err);
     } finally {
