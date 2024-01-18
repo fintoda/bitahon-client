@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "build:all": "npm run build --ws",
+    "bootstrap": "npm i && npm run build:all && cd example && npm i",
+    "example": "cd example && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
