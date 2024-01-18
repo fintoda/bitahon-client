@@ -2,6 +2,9 @@ import React from 'react';
 import {Button, CircularProgress} from '@mui/material';
 import { useSession } from '@/lib/session';
 import SplashView from '@/components/SplashView';
+import {Client} from '@bitahon/client';
+
+console.log(Client)
 
 const sleep = (delay: number = 1000) => new Promise(resolve => setTimeout(resolve, delay, true));
 
