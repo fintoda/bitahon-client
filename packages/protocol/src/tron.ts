@@ -1,6 +1,11 @@
 import {IBip32Path, ITokenMetadata} from './common';
 import protocol from './protocol';
 
+export enum NETWORK_ID {
+  TRON_MAINNET = 1,
+  TRON_TESTNET = 2,
+}
+
 export enum METHOD_ID {
   GET_PUBLIC_KEY = 1,
   SIGN_PERSONAL_MESSAGE = 2,

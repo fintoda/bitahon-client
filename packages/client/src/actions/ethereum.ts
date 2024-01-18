@@ -5,7 +5,7 @@ import {Bip32Curve, Bip32Path} from '../bip32';
 import {ECDSASignResult, IAction} from './types';
 
 export type GetPublicKeyParams = {
-  network: number;
+  network: ethereum.NETWORK_ID;
   path: string;
 };
 
@@ -18,26 +18,26 @@ export type GetPublicKeyResult = {
 };
 
 export type SignPersonalMessageParams = {
-  network: number;
+  network: ethereum.NETWORK_ID;
   path: string;
   msg: Buffer;
 };
 
 export type SignEIP712MessageParams = {
-  network: number;
+  network: ethereum.NETWORK_ID;
   path: string;
   msg: string;
 };
 
 export type SignEIP712HashedMessageParams = {
-  network: number;
+  network: ethereum.NETWORK_ID;
   path: string;
   domainHash: Buffer;
   messageHash: Buffer;
 };
 
 export type SignTransactionParams = {
-  network: number;
+  network: ethereum.NETWORK_ID;
   path: string;
   rawTx: Buffer;
   tokens?: common.ITokenMetadata[];
