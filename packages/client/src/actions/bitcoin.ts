@@ -5,7 +5,7 @@ import {Bip32Curve, Bip32Path} from '../bip32';
 import {IAction} from './types';
 
 export type GetPublicKeyParams = {
-  network: number;
+  network: bitcoin.NETWORK_ID;
   path: string;
 };
 
@@ -18,7 +18,7 @@ export type GetPublicKeyResult = {
 };
 
 export type SignMessageParams = {
-  network: number;
+  network: bitcoin.NETWORK_ID;
   path: string;
   msg: Buffer;
 };
@@ -30,7 +30,7 @@ export type SignMessageResult = {
 };
 
 export type SignTransactionParams = {
-  network: number;
+  network: bitcoin.NETWORK_ID;
   psbt: Buffer;
   paths: {
     [key: number]: string;

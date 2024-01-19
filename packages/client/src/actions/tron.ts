@@ -5,7 +5,7 @@ import {Bip32Curve, Bip32Path} from '../bip32';
 import {ECDSASignResult, IAction} from './types';
 
 export type GetPublicKeyParams = {
-  network: number;
+  network: tron.NETWORK_ID;
   path: string;
 };
 
@@ -18,13 +18,13 @@ export type GetPublicKeyResult = {
 };
 
 export type SignPersonalMessageParams = {
-  network: number;
+  network: tron.NETWORK_ID;
   path: string;
   msg: Buffer;
 };
 
 export type SignTransactionParams = {
-  network: number;
+  network: tron.NETWORK_ID;
   path: string;
   rawTx: Buffer;
   tokens?: common.ITokenMetadata[];
