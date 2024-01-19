@@ -16,13 +16,33 @@ npm install @bitahon/qrcode
 
 ```ts
 import {QrCodeSender} from '@bitahon/qrcode';
-// TODO
+import {transport} from '@bitahon/protocol';
+
+function ExampleSender(props: { data: Buffer; }) {
+  const payload: Uint8Array = transport.encodeApiTransport({
+    data: props.data,
+  });
+
+  return (
+    <QrCodeSender data={Buffer.from(payload)} size={300} speed={500} />
+  );
+}
 ```
 
 ```ts
+import React from 'react';
 import {QrCodeReceiver} from '@bitahon/qrcode';
 import  '@bitahon/qrcode/dist/style.css';
-// TODO
+
+function ExampleReceiver() {
+  const successHandler = React.useCallback((data: Buffer) => {
+    console.log(data.toString('hex'));
+  }, []);
+
+  return (
+    <QrCodeReceiver onScanned={successHandler} />
+  );
+}
 ```
 
 ## API

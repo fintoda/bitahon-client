@@ -21,7 +21,6 @@ export function QrCodeSender({data, size = 250, speed = 1000, mtu, ...rest}: QrC
   const [current, setCurrent] = React.useState(0);
   const {run, stop} = useTimer(speed);
 
-
   const qrcodes = React.useMemo(() => {
     return encodeQRCodeChunks(data, mtu);
   }, [data, mtu]); 
