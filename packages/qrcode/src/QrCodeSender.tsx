@@ -1,9 +1,13 @@
 import React, {CSSProperties} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
 import { useTimer } from './hooks';
+import {
+  encodeQRCodeChunks
+} from '@bitahon/transport';
 
 export interface QrCodeSenderProps {
-  qrcodes: string[];
+  data: Buffer;
+  mtu?: number | undefined
   speed?: number
   size?: number;
   level?: string;
@@ -13,9 +17,13 @@ export interface QrCodeSenderProps {
   includeMargin?: boolean;
 }
 
-export function QrCodeSender({qrcodes, size = 250, speed = 1000, ...rest}: QrCodeSenderProps) {
+export function QrCodeSender({data, size = 250, speed = 1000, mtu, ...rest}: QrCodeSenderProps) {
   const [current, setCurrent] = React.useState(0);
   const {run, stop} = useTimer(speed);
+
+  const qrcodes = React.useMemo(() => {
+    return encodeQRCodeChunks(data, mtu);
+  }, [data, mtu]); 
 
   React.useEffect(() => {
     if (!qrcodes || qrcodes.length <= 1) {
