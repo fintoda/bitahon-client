@@ -26,3 +26,19 @@ export function useTimer(delay: number = 1000) {
 
   return {run, stop};
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useEventEffect<T extends (...args: any[]) => any>(handler: T) {
+  const handlerRef = React.useRef(handler);
+
+  React.useLayoutEffect(() => {
+    handlerRef.current = handler;
+  });
+
+  return React.useCallback(
+    (...args: Parameters<typeof handler>): ReturnType<typeof handler> => {
+      return handlerRef.current?.(...args);
+    },
+    [],
+  );
+}

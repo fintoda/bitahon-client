@@ -13,7 +13,7 @@ export interface QrCodeSenderProps {
   includeMargin?: boolean;
 }
 
-export function QrCodeSender({qrcodes, size = 250, speed = 1000}: QrCodeSenderProps) {
+export function QrCodeSender({qrcodes, size = 250, speed = 1000, ...rest}: QrCodeSenderProps) {
   const [current, setCurrent] = React.useState(0);
   const {run, stop} = useTimer(speed);
 
@@ -37,5 +37,5 @@ export function QrCodeSender({qrcodes, size = 250, speed = 1000}: QrCodeSenderPr
     };
   }, [qrcodes, run, stop])
 
-  return qrcodes && qrcodes[current] ? <QRCodeSVG value={qrcodes[current]} size={size} /> : null;
+  return qrcodes && qrcodes[current] ? <QRCodeSVG value={qrcodes[current]} size={size} {...rest} /> : null;
 }
