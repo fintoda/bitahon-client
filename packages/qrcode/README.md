@@ -32,7 +32,7 @@ function ExampleSender(props: { data: Buffer; }) {
 ```ts
 import React from 'react';
 import {QrCodeReceiver} from '@bitahon/qrcode';
-import  '@bitahon/qrcode/dist/style.css';
+import '@bitahon/qrcode/dist/style.css';
 
 function ExampleReceiver() {
   const successHandler = React.useCallback((data: Buffer) => {
@@ -49,7 +49,13 @@ function ExampleReceiver() {
 
 ### Interfaces
 
-### Functions
+- [QrCodeSenderProps](src/QrCodeSender.tsx)
+- [QrCodeReceiverProps](src/QrCodeReceiver.tsx)
+
+### Components
+
+- [QrCodeSender](src/QrCodeSender.tsx)
+- [QrCodeReceiver](src/QrCodeReceiver.tsx)
 
 ## License
 
