@@ -3,8 +3,8 @@ import Modal from "@/components/Modal";
 import Button from '@mui/material/Button';
 import modalQRCode, {PayloadType, ResultType} from './modalQrCode';
 import { useModal } from "@/lib/modals";
-import QrCodeRequest from './QrCodeRequest';
-import QrCodeResponse from './QrCodeResponse';
+import {QrCodeSender, QrCodeReceiver} from '@bitahon/qrcode';
+import  '@bitahon/qrcode/dist/style.css';
 
 function ModalQRCodeTransport() {
   const [data, close] = useModal<PayloadType, ResultType>(modalQRCode.UID);
@@ -53,9 +53,11 @@ function ModalQRCodeTransportView({visible, close, payload}: ModalQRCodeTranspor
       ): null}
     >
        {step === 'response' ? (
-          <QrCodeResponse onResult={successHandler} />
+          <QrCodeReceiver onScanned={successHandler} />
         ) : (
-          <QrCodeRequest qrcodes={payload.qrcodes} speed={1000} />
+          <div className="text-center">
+            <QrCodeSender qrcodes={payload.qrcodes} size={300} speed={1000} />
+          </div>
         )}
     </Modal>
   )

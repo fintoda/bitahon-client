@@ -6,6 +6,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["src", "src/*.json"],
+  "include": ["src", "src/**/*.json"],
   "exclude": ["node_modules", "**/__tests__/*"]
 }

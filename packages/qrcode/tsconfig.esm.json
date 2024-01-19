@@ -4,16 +4,14 @@
     "rootDir": "src",
     "outDir": "dist/esm",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "preserve"
   },
   "include": ["src", "src/**/*.json"],
   "exclude": ["node_modules", "**/__tests__/*"],
   "references": [
     {
-      "path": "../protocol/tsconfig.esm.json"
-    },
-    {
-      "path": "../crypto/tsconfig.esm.json"
+      "path": "../transport/tsconfig.esm.json"
     }
   ]
 }
