@@ -56,7 +56,7 @@ function ModalQRCodeTransportView({visible, close, payload}: ModalQRCodeTranspor
           <QrCodeReceiver onScanned={successHandler} />
         ) : (
           <div className="text-center">
-            <QrCodeSender qrcodes={payload.qrcodes} size={300} speed={1000} />
+            <QrCodeSender data={payload.data} size={300} speed={1000} />
           </div>
         )}
     </Modal>

@@ -3,7 +3,7 @@ import {Modal} from '@/lib/modals';
 export type PayloadType = {
   title?: string;
   description?: string;
-  qrcodes: string[];
+  data: Buffer;
 };
 export type ResultType = {
   type: 'cancel';

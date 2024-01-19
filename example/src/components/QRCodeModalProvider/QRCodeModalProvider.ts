@@ -1,5 +1,4 @@
 import {IClientConnectionProvider} from '@bitahon/client';
-import {encodeQRCodeChunks} from '@bitahon/transport';
 import modalQRCode from './modalQrCode';
 
 class CancelPromiseError extends Error {
@@ -12,8 +11,7 @@ class CancelPromiseError extends Error {
 
 class QRCodeModalProvider implements IClientConnectionProvider {
   async send(data: Buffer) {
-    const dataChunks = encodeQRCodeChunks(data);
-    const response = await modalQRCode.openAsync({qrcodes: dataChunks});
+    const response = await modalQRCode.openAsync({data});
     if (!(response.type === 'success' && response.data)) {
       throw new CancelPromiseError();
     }
