@@ -1,7 +1,9 @@
 
 import React from 'react';
 import { ChanksDecoder } from './ChanksDecoder';
-import {QrScanner, QrScannerProps} from '@yudiel/react-qr-scanner';
+import {QrScanner, QrScannerProps, useMediaDevices} from '@yudiel/react-qr-scanner';
+
+export {useMediaDevices};
 
 export interface QrCodeReceiverProps extends QrScannerProps {
   onScanFinish: (value: Buffer) => void;
