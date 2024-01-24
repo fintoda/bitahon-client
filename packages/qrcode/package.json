@@ -1,6 +1,6 @@
 {
   "name": "@bitahon/qrcode",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Bitahon Protocol QR Code",
   "type": "module",
   "main": "dist/cjs/index.js",

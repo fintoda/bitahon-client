@@ -40,7 +40,7 @@ function ExampleReceiver() {
   }, []);
 
   return (
-    <QrCodeReceiver onScanned={successHandler} />
+    <QrCodeReceiver onScanFinish={successHandler} />
   );
 }
 ```
