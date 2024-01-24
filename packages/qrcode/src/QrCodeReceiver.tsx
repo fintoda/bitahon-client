@@ -1,38 +1,27 @@
 
 import React from 'react';
-import {Html5QrcodeScanner, QrcodeSuccessCallback, QrcodeErrorCallback, Html5QrcodeResult} from 'html5-qrcode';
-import { useEventEffect } from './hooks';
 import { ChanksDecoder } from './ChanksDecoder';
+import {QrScanner, QrScannerProps} from '@yudiel/react-qr-scanner';
 
-const QRCODE_REGION_ID = 'html5-qrcode-id';
-
-interface QrCodeReceiverProps {
-  onScanned: (value: Buffer) => void;
-  showProgress?: boolean;
+export interface QrCodeReceiverProps extends QrScannerProps {
+  onScanFinish: (value: Buffer) => void;
   className?: string;
-  fps?: number;
-  onScan?: QrcodeSuccessCallback;
-  onError?: QrcodeErrorCallback;
+  renderProgress?: ({chunks}: {chunks: boolean[]}) => React.ReactNode;
 }
 
-export {QrcodeSuccessCallback, QrCodeReceiverProps, QrcodeErrorCallback};
-
 export function QrCodeReceiver({
-  showProgress = true,
   className = '',
-  fps = 30,
-  onScanned,
+  renderProgress,
+  onScanFinish,
   onError = () => {},
-  onScan = () => {},
+  onDecode = () => {},
+  ...rest
 }: QrCodeReceiverProps) {
   const chunksDecoder = React.useRef(new ChanksDecoder()).current;
   const [chunks, setChunks] = React.useState<boolean[]>([]);
-  const errorEvent = useEventEffect(onError);
-  const scanEvent = useEventEffect(onScan);
-  const scannedEvent = useEventEffect(onScanned);
 
-  const scanHandler = React.useCallback((value: string, result: Html5QrcodeResult) => {
-    scanEvent(value, result);
+  const scanHandler = (value: string) => {
+    onDecode(value);
     if (!value) {
       return;
     }
@@ -44,46 +33,19 @@ export function QrCodeReceiver({
     if (chunksDecoder.isDone()) {
       const action = chunksDecoder.decodeChunks();
       if (action) {
-        scannedEvent(action);
+        onScanFinish(action);
       }
     }
-  }, [chunksDecoder, scanEvent, scannedEvent]);
-
-  React.useEffect(() => {
-    const scanner = new Html5QrcodeScanner(
-      QRCODE_REGION_ID,
-      {
-        fps: fps,
-        useBarCodeDetectorIfSupported: true,
-      },
-      false,
-    );
-    scanner.render(scanHandler, errorEvent);
-    return () => {
-      scanner.clear().catch((error) => {
-        console.error('Failed to clear html5QrcodeScanner. ', error);
-      });
-    };
-  }, [errorEvent, fps, scanHandler]);
-
-  const progress = React.useMemo(() => {
-    const count = chunks.length;
-    const recieved = chunks.filter((it) => it).length;
-    return `${recieved}/${count}`;
-  }, [chunks]);
+  };
 
   return (
     <div className={`qrcode-receiver ${className}`}>
-      {showProgress ? (
-        <div className="qrcode-receiver_progress">{progress}</div>
-      ) : null}
-      <div
-        id={QRCODE_REGION_ID}
-        className="qrcode-receiver_camera"
-        style={{
-          width: '512px',
-          margin: '0 auto',
-        }}
+      {renderProgress?.({chunks})}
+      <QrScanner
+        onDecode={scanHandler}
+        onError={onError}
+        scanDelay={10}
+        {...rest}
       />
     </div>
   );

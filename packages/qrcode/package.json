@@ -1,6 +1,6 @@
 {
   "name": "@bitahon/qrcode",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Bitahon Protocol QR Code",
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -13,10 +13,9 @@
     }
   },
   "scripts": {
-    "build": "npm run build:css && npm run build:cjs && npm run build:esm",
+    "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc --build ./tsconfig.cjs.json",
     "build:esm": "tsc --build ./tsconfig.esm.json",
-    "build:css": "sass src/style.css dist/style.css --style=compressed",
     "format": "prettier --write \"src/**/*.(js|ts)\"",
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --fix --ext .js,.ts",
@@ -38,12 +37,11 @@
   ],
   "dependencies": {
     "@bitahon/transport": "^1.0.0",
-    "html5-qrcode": "^2.3.8",
+    "@yudiel/react-qr-scanner": "^1.2.6",
     "qrcode.react": "^3.1.0"
   },
   "devDependencies": {
-    "@types/react": "^18",
-    "sass": "^1.70.0"
+    "@types/react": "^18"
   },
   "peerDependencies": {
     "react": "^18"
