@@ -1,17 +1,10 @@
 import React from 'react';
 import Modal from "@/components/Modal";
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import modalQRCode, {PayloadType, ResultType} from './modalQrCode';
 import { useModal } from "@/lib/modals";
-import {QrCodeSender, QrCodeReceiver, QrCodeReceiverProps, useMediaDevices} from '@bitahon/qrcode';
-import { FormControl, InputLabel, MenuItem, useMediaQuery } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-const DEFAULT_CONSTRAINTS = {
-  width: { min: 640, ideal: 720, max: 1920 },
-  height: { min: 640, ideal: 720, max: 1080 }
-};
+import {QrCodeSender, QrCodeReceiver, QrCodeReceiverProps} from '@bitahon/qrcode';
+import {useMediaQuery} from '@mui/material';
 
 function ModalQRCodeTransport() {
   const [data, close] = useModal<PayloadType, ResultType>(modalQRCode.UID);
@@ -89,17 +82,12 @@ function ModalQRCodeTransportView({visible, close, payload}: ModalQRCodeTranspor
 
 interface QrCodeReceiverComponentProps {
   onScanFinish: QrCodeReceiverProps['onScanFinish'];
-  constraints?: MediaTrackConstraintSet;
 }
-
-type MediaTrackSettingsWithLabel = MediaTrackSettings & {label: string};
 
 function QrCodeReceiverComponent({
   onScanFinish,
-  constraints = DEFAULT_CONSTRAINTS,
 }: QrCodeReceiverComponentProps) {
-  const devices = useMediaDevices(constraints);
-  const [enumDevices, setEnumDevices] = React.useState<MediaTrackSettingsWithLabel[]>([]);
+  const [devices, currentTrack] = useMediaDevices();
   const [cameraFliped, setCameraFliped] = React.useState(false);
   const [currentDeviceId, setCurrentDeviceId] = React.useState<string>('');
 
@@ -108,30 +96,10 @@ function QrCodeReceiverComponent({
   }
 
   React.useEffect(() => {
-    async function mergeDevices(_devices: MediaTrackSettings[]) {
-      try {
-        const map: {[K: string]: MediaDeviceInfo} = {};
-        const result = await navigator.mediaDevices.enumerateDevices();
-        result.forEach(it => {
-          map[it.deviceId] = it;
-        });
-        const devicesWithLabel: MediaTrackSettingsWithLabel[] = _devices.map(it => {
-          const _deviceId = it.deviceId;
-          return {
-            ...it,
-            label: _deviceId && map[_deviceId] ? map[_deviceId].label : '',
-          }
-        });
-        setEnumDevices(devicesWithLabel);
-        if (devicesWithLabel[0]) {
-          setCurrentDeviceId(devicesWithLabel[0].deviceId ?? '');
-        }
-      } catch (err) {
-        console.error(err);
-      }
+    if (currentTrack && !currentDeviceId) {
+      setCurrentDeviceId(currentTrack.deviceId ?? '');
     }
-    mergeDevices(devices);
-  }, [devices]);
+  }, [currentDeviceId, currentTrack]);
 
   return (
     <QrCodeReceiver
@@ -149,33 +117,53 @@ function QrCodeReceiverComponent({
         } 
         return (
           <div>
-             <FormControl sx={{ minWidth: 100 }} size="small">
-                <InputLabel id="devices-select-label">Devices</InputLabel>
-                <Select
-                  labelId="devices-select-label"
-                  value={currentDeviceId}
-                  label="Devices"
-                  onChange={(e: SelectChangeEvent) => {
-                    const _deviceId = e.target.value;
-                    _deviceId && setCurrentDeviceId(_deviceId);
-                  }}
-                >
-                  {enumDevices.map((device) => {
-                    return (
-                      <MenuItem key={device.deviceId} value={device.deviceId}>
-                        <div>{device.label || device.deviceId}</div>
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
-              </FormControl>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <div>{`${percent}%`}</div>
-                <Button onClick={flipCamera}>Flip Camera</Button>
-              </Stack>
+            <select
+              style={{maxWidth: '100%', marginBottom: 8}}
+              value={currentDeviceId}
+              onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+                const _deviceId = e.currentTarget.value;
+                _deviceId && setCurrentDeviceId(_deviceId);
+              }}>
+              {devices.map((device) => {
+                return (
+                  <option key={device.deviceId} value={device.deviceId}>{device.label}</option>
+                )
+              })}
+            </select>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8}}>
+              <div>{`${percent}%`}</div>
+              <button onClick={flipCamera}>Flip Camera</button>
+            </div>
           </div>
         )
       }}
     />
   )
 }
+
+const useMediaDevices = (): [MediaDeviceInfo[], MediaTrackSettings | null] => {
+  const [devices, setDivices] = React.useState<MediaDeviceInfo[]>([]);
+  const [current, setCurrent] = React.useState<MediaTrackSettings | null>(null);
+
+  const getDevices = React.useCallback(async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: true,
+      });
+      const videoTracks = mediaStream.getVideoTracks();
+      const current = videoTracks[0] ? videoTracks[0].getSettings() : null;
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      setDivices(devices.filter(device => device.deviceId && device.kind === 'videoinput'));
+      setCurrent(current);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    getDevices();
+  }, [getDevices]);
+
+  return [devices, current];
+};
