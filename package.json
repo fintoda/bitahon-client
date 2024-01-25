@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build:all": "npm run build --ws",
+    "build:example": "cd example && npm run build",
     "bootstrap": "npm i && npm run build:all && cd example && npm i",
     "example": "cd example && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/fintoda/bitahon-client/issues"
   },
-  "homepage": "https://github.com/fintoda/bitahon-client#readme",
+  "homepage": "https://fintoda.github.io/bitahon-client",
   "workspaces": [
     "packages/*"
   ],
@@ -28,6 +29,7 @@
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
     "eslint-plugin-jest": "^27.6.3",
+    "gh-pages": "^6.1.1",
     "jest": "^29.7.0",
     "prettier": "^3.2.2",
     "ts-jest": "^29.1.1",
