@@ -8,9 +8,7 @@ import {QrCodeSender, QrCodeReceiver, QrCodeReceiverProps, useMediaDevices} from
 import { FormControl, InputLabel, MenuItem, useMediaQuery } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-const DEFAULT_CONSTRAINTS = {
-  width: { ideal: 720 },
-};
+const DEFAULT_CONSTRAINTS = {};
 
 function ModalQRCodeTransport() {
   const [data, close] = useModal<PayloadType, ResultType>(modalQRCode.UID);
