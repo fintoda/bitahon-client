@@ -16,6 +16,7 @@
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc --build ./tsconfig.cjs.json",
     "build:esm": "tsc --build ./tsconfig.esm.json",
+    "clean": "rm -Rf ./dist* ./coverage *.tsbuildinfo",
     "format": "prettier --write \"src/**/*.(js|ts)\"",
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --fix --ext .js,.ts",

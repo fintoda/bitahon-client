@@ -5,7 +5,7 @@
     "outDir": "dist/cjs",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "preserve"
+    "jsx": "react"
   },
   "include": ["src", "src/**/*.json"],
   "exclude": ["node_modules", "**/__tests__/*"],
