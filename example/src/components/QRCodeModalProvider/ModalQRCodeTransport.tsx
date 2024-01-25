@@ -94,12 +94,6 @@ function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
   const flipCamera = () => {
     setCameraFliped(!cameraFliped);
   }
-
-  React.useEffect(() => {
-    if (devices[0]) {
-      setCurrentDeviceId(devices[0].deviceId)
-    }
-  }, [devices]);
  
   return (
     <QrCodeReceiver
@@ -107,7 +101,6 @@ function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
       onScanFinish={onScanFinish}
       onDecode={(res) => console.log('onDecode', res)}
       videoStyle={cameraFliped ? {transform: 'scaleX(-100%)'} : undefined}
-      deviceId={currentDeviceId ? currentDeviceId : undefined}
       renderProgress={({chunks}) => {
         const count = chunks.length;
         let percent = 0;
@@ -117,7 +110,7 @@ function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
         } 
         return (
           <div>
-             <FormControl sx={{ minWidth: 100 }} size="small" disabled={!devices.length}>
+             <FormControl sx={{ minWidth: 100 }} size="small">
                 <InputLabel id="devices-select-label">Devices</InputLabel>
                 <Select
                   labelId="devices-select-label"
@@ -129,7 +122,15 @@ function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
                   }}
                 >
                   {devices.map((device) => {
-                    return <MenuItem key={device.deviceId} value={device.deviceId}>{device.label}</MenuItem>
+                    return (
+                      <MenuItem key={device.deviceId} value={device.deviceId}>
+                        <div>
+                          <div>{device.deviceId}</div>
+                          <div>{device.kind}</div>
+                          <div>{device.label}</div>
+                        </div>
+                      </MenuItem>
+                    )
                   })}
                 </Select>
               </FormControl>
@@ -150,7 +151,7 @@ const useMediaDevices = () => {
   const getDevices = React.useCallback(async () => {
     try {
       const devices = await navigator.mediaDevices.enumerateDevices();
-      setState(devices.filter(device => device.deviceId && device.kind === 'videoinput'));
+      setState(devices.filter(device => device.deviceId));
     } catch (err) {
       console.error(err);
     }
