@@ -26,7 +26,7 @@ export default function ActionGetPubKey() {
       );
       const client = new Client(new QRCodeModalProvider(), clientSession);
       const response = await client.request(action);
-      console.log(response)
+      console.log(response);
     } catch (err) {
       console.error(err);
     } finally {
