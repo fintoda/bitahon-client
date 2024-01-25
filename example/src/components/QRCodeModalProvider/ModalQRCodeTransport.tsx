@@ -9,8 +9,8 @@ import { FormControl, InputLabel, MenuItem, useMediaQuery } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const DEFAULT_CONSTRAINTS = {
-  width: { min: 640, ideal: 720, max: 1920 },
-  height: { min: 640, ideal: 720, max: 1080 }
+  width: { min: 320, ideal: 720 },
+  height: { min: 320, ideal: 720 }
 };
 
 function ModalQRCodeTransport() {
