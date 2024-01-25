@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import modalQRCode, {PayloadType, ResultType} from './modalQrCode';
 import { useModal } from "@/lib/modals";
-import {QrCodeSender, QrCodeReceiver, QrCodeReceiverProps} from '@bitahon/qrcode';
+import {QrCodeSender, QrCodeReceiver, QrCodeReceiverProps, useMediaDevices} from '@bitahon/qrcode';
 import { FormControl, InputLabel, MenuItem, useMediaQuery } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
@@ -86,21 +86,51 @@ interface QrCodeReceiverComponentProps {
   onScanFinish: QrCodeReceiverProps['onScanFinish'];
 }
 
+type MediaTrackSettingsWithLabel = MediaTrackSettings & {label: string};
+
 function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
   const devices = useMediaDevices();
+  const [enumDevices, setEnumDevices] = React.useState<MediaTrackSettingsWithLabel[]>([]);
   const [cameraFliped, setCameraFliped] = React.useState(false);
   const [currentDeviceId, setCurrentDeviceId] = React.useState<string>('');
 
   const flipCamera = () => {
     setCameraFliped(!cameraFliped);
   }
- 
+
+  React.useEffect(() => {
+    async function mergeDevices(_devices: MediaTrackSettings[]) {
+      try {
+        const map: {[K: string]: MediaDeviceInfo} = {};
+        const result = await navigator.mediaDevices.enumerateDevices();
+        result.forEach(it => {
+          map[it.deviceId] = it;
+        });
+        const devicesWithLabel: MediaTrackSettingsWithLabel[] = _devices.map(it => {
+          const _deviceId = it.deviceId;
+          return {
+            ...it,
+            label: _deviceId && map[_deviceId] ? map[_deviceId].label : '',
+          }
+        });
+        setEnumDevices(devicesWithLabel);
+        if (devicesWithLabel[0]) {
+          setCurrentDeviceId(devicesWithLabel[0].deviceId ?? '');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    mergeDevices(devices);
+  }, [devices]);
+
   return (
     <QrCodeReceiver
       onError={(err) => console.error(err)}
       onScanFinish={onScanFinish}
       onDecode={(res) => console.log('onDecode', res)}
       videoStyle={cameraFliped ? {transform: 'scaleX(-100%)'} : undefined}
+      deviceId={currentDeviceId}
       renderProgress={({chunks}) => {
         const count = chunks.length;
         let percent = 0;
@@ -121,14 +151,10 @@ function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
                     _deviceId && setCurrentDeviceId(_deviceId);
                   }}
                 >
-                  {devices.map((device) => {
+                  {enumDevices.map((device) => {
                     return (
                       <MenuItem key={device.deviceId} value={device.deviceId}>
-                        <div>
-                          <div>{device.deviceId}</div>
-                          <div>{device.kind}</div>
-                          <div>{device.label}</div>
-                        </div>
+                        <div>{device.label || device.deviceId}</div>
                       </MenuItem>
                     )
                   })}
@@ -144,46 +170,3 @@ function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
     />
   )
 }
-
-const useMediaDevices = () => {
-  const [state, setState] = React.useState<MediaDeviceInfo[]>([]);
-
-  const getDevices = React.useCallback(async () => {
-    try {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      setState(devices.filter(device => device.deviceId));
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  const getPermissions = React.useCallback(async () => {
-    let permissions: PermissionStatus | null = null;
-    try {
-      permissions = await navigator.permissions.query({name: 'camera' as PermissionName});
-    } catch (err) {
-      console.log(err);
-    }
-
-    if (!permissions) {
-      return;
-    }
-
-    if (permissions.state === 'granted') {
-      getDevices();
-      return;
-    }
-  
-    permissions.onchange = () => {
-      if (permissions?.state === 'granted') {
-        getDevices();
-      }
-    }
-  }, [getDevices]);
-
-  React.useEffect(() => {
-    getPermissions();
-  }, [getPermissions]);
-
-  return state;
-};
