@@ -8,6 +8,11 @@ import {QrCodeSender, QrCodeReceiver, QrCodeReceiverProps, useMediaDevices} from
 import { FormControl, InputLabel, MenuItem, useMediaQuery } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
+const DEFAULT_CONSTRAINTS = {
+  width: { min: 640, ideal: 720, max: 1920 },
+  height: { min: 640, ideal: 720, max: 1080 }
+};
+
 function ModalQRCodeTransport() {
   const [data, close] = useModal<PayloadType, ResultType>(modalQRCode.UID);
   const {visible, payload} = data ?? {};
@@ -84,12 +89,16 @@ function ModalQRCodeTransportView({visible, close, payload}: ModalQRCodeTranspor
 
 interface QrCodeReceiverComponentProps {
   onScanFinish: QrCodeReceiverProps['onScanFinish'];
+  constraints?: MediaTrackConstraintSet;
 }
 
 type MediaTrackSettingsWithLabel = MediaTrackSettings & {label: string};
 
-function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
-  const devices = useMediaDevices();
+function QrCodeReceiverComponent({
+  onScanFinish,
+  constraints = DEFAULT_CONSTRAINTS,
+}: QrCodeReceiverComponentProps) {
+  const devices = useMediaDevices(constraints);
   const [enumDevices, setEnumDevices] = React.useState<MediaTrackSettingsWithLabel[]>([]);
   const [cameraFliped, setCameraFliped] = React.useState(false);
   const [currentDeviceId, setCurrentDeviceId] = React.useState<string>('');
