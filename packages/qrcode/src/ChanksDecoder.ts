@@ -35,7 +35,7 @@ export class ChanksDecoder {
         !('chunkNumber' in decodedChunk) ||
         !('chunksCount' in decodedChunk)
       ) {
-        return false;
+        return;
       }
       const num = decodedChunk.chunkNumber;
       const count = decodedChunk.chunksCount;
@@ -48,6 +48,7 @@ export class ChanksDecoder {
       }
       this.chunksDone[chunk] = true;
       this._state.data[num] = decodedChunk;
+      return true;
     } catch (err) {
       console.error(err);
     }
