@@ -13,6 +13,8 @@ Below you can find a list of the packages included in this repository.
 | [@bitahon/client](packages/client) | | | |
 | [@bitahon/browser-crypto](packages/browser-crypto) | | | |
 | [@bitahon/transport](packages/transport) | | | |
+| [@bitahon/qrcode](packages/qrcode) | | | |
+| [@bitahon/api](packages/api) | | | |
 
 ## Package dependency relationship
 
@@ -20,8 +22,11 @@ Below you can find a list of the packages included in this repository.
  graph TD
   client{client}
   transport{transport}
+  qrcode{qrcode}
   protocol --> client
   crypto --> client
   crypto --> transport
   crypto --> browser-crypto
+  transport --> qrcode
+  protocol --> qrcode
 ```
