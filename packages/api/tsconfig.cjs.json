@@ -1,0 +1,16 @@
+{
+  "extends": "../../config/tsconfig.cjs.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist/cjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["src", "src/**/*.json"],
+  "exclude": ["node_modules", "**/__tests__/*"],
+  "references": [
+    {
+      "path": "../protocol/tsconfig.cjs.json"
+    }
+  ]
+}
