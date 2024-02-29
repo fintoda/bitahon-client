@@ -42,3 +42,24 @@ export function useEventEffect<T extends (...args: any[]) => any>(handler: T) {
     [],
   );
 }
+
+type FlipStatus = 'yes' | 'no';
+const STORAGE_CAMEAR_FLIP_KEY = '@bitahon/qrcode/cameraFlipped';
+
+export const useCameraFlip = (): [FlipStatus, (value: FlipStatus) => void] => {
+  const [fliped, setFliped] = React.useState(() => {
+    let value: FlipStatus = 'no';
+    if (window.localStorage) {
+      const d = window.localStorage.getItem(STORAGE_CAMEAR_FLIP_KEY);
+      value = d === 'yes' ? d : 'no';
+    }
+    return value;
+  });
+  const set = React.useCallback((value: FlipStatus) => {
+    if (window?.localStorage) {
+      window.localStorage.setItem(STORAGE_CAMEAR_FLIP_KEY, value)
+    }
+    setFliped(value);
+  }, []);
+  return [fliped, set];
+}

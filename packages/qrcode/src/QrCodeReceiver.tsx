@@ -2,6 +2,7 @@
 import React, { CSSProperties } from 'react';
 import { ChanksDecoder } from './ChanksDecoder';
 import {QrScanner, QrScannerProps} from '@yudiel/react-qr-scanner';
+import { useCameraFlip } from './hooks';
 
 export interface QrCodeReceiverProps extends QrScannerProps {
   onScanFinish: (value: Buffer) => void;
@@ -47,13 +48,13 @@ export function QrCodeReceiver({
   ...rest
 }: QrCodeReceiverProps) {
   const chunksDecoder = React.useRef(new ChanksDecoder()).current;
-  const [cameraFliped, setCameraFliped] = React.useState(false);
+  const [cameraFlipped, setCameraFlipped] = useCameraFlip();
   const [devices, currentTrack] = useMediaDevices();
   
   const [currentDeviceId, setCurrentDeviceId] = React.useState<string>('');
 
   const flipCamera = () => {
-    setCameraFliped(!cameraFliped);
+    setCameraFlipped(cameraFlipped === 'no' ? 'yes' : 'no');
   }
 
   React.useEffect(() => {
@@ -86,7 +87,7 @@ export function QrCodeReceiver({
     position: 'static',
   }
 
-  if (cameraFliped) {
+  if (cameraFlipped === 'yes') {
     videoStyles.transform = 'scaleX(-100%)';
   }
 
