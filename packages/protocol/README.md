@@ -175,6 +175,7 @@ const payload: Uint8Array = transport.encodeApiTransport({
 | AVALANCHE_MAINNET | 7 |
 | WBT_MAINNET | 8 |
 | BASE_MAINNET | 9 |
+| ETHEREUM_SEPOLIA | 10 |
 
 #### METHOD_ID
 
