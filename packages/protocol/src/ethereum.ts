@@ -11,6 +11,7 @@ export enum NETWORK_ID {
   AVALANCHE_MAINNET = 7,
   WBT_MAINNET = 8,
   BASE_MAINNET = 9,
+  ETHEREUM_SEPOLIA = 10,
 }
 
 export enum METHOD_ID {
