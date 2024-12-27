@@ -1,6 +1,6 @@
 {
   "name": "@bitahon/api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bitahon Backend API Client",
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -37,7 +37,7 @@
     "src"
   ],
   "dependencies": {
-    "@bitahon/protocol": "^1.0.0",
-    "axios": "^1.6.7"
+    "@bitahon/protocol": "^1.0.1",
+    "axios": "^1.7.9"
   }
 }

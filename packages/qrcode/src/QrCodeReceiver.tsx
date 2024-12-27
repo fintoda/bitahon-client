@@ -1,9 +1,8 @@
-
 import React, { CSSProperties } from 'react';
 import { ChanksDecoder } from './ChanksDecoder';
-import {QrScanner, QrScannerProps} from '@yudiel/react-qr-scanner';
+import {QrScanner, IQrScannerProps} from '@yudiel/react-qr-scanner';
 
-export interface QrCodeReceiverProps extends QrScannerProps {
+export interface QrCodeReceiverProps extends IQrScannerProps {
   onScanFinish: (value: Buffer) => void;
   className?: string;
   onChunksChanged?: (chunks: boolean[]) => void;

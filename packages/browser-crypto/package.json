@@ -1,6 +1,6 @@
 {
   "name": "@bitahon/browser-crypto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bitahon Browser Crypto Provider",
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -40,9 +40,9 @@
     "@bitahon/crypto": "^1.0.0",
     "crypto-js": "^4.2.0",
     "tiny-secp256k1": "^2.2.3",
-    "varuint-bitcoin": "^1.1.2"
+    "varuint-bitcoin": "^2.0.0"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.1"
+    "@types/crypto-js": "^4.2.2"
   }
 }

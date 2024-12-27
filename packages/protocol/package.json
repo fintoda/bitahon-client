@@ -1,6 +1,6 @@
 {
   "name": "@bitahon/protocol",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bitahon Protocol",
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -37,6 +37,6 @@
     "src"
   ],
   "dependencies": {
-    "protobufjs": "^7.2.5"
+    "protobufjs": "^7.4.0"
   }
 }
