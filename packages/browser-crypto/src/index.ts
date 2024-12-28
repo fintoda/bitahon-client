@@ -1,7 +1,7 @@
 import {IEcc, ICryptoProvider} from '@bitahon/crypto';
 import CryptoJS from 'crypto-js';
 import * as secp256k1 from 'tiny-secp256k1';
-import varuint from 'varuint-bitcoin';
+import * as varuint from 'varuint-bitcoin';
 
 function wordsToBytes(data: CryptoJS.lib.WordArray): Uint8Array {
   const dataArray = new Uint8Array(data.sigBytes);
