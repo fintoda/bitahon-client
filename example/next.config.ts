@@ -1,7 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type {NextConfig} from 'next';
+
+const nextConfig: NextConfig = {
   reactStrictMode: false,
-  output: 'export',
   webpack: function (config) {
     config.experiments = {
       asyncWebAssembly: true,
@@ -12,6 +12,6 @@ const nextConfig = {
   experimental: {
     webpackBuildWorker: true,
   },
-}
+};
 
-module.exports = nextConfig
+export default nextConfig;

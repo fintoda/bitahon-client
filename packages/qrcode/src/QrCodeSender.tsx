@@ -1,29 +1,34 @@
 import React, {CSSProperties} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
-import { useTimer } from './hooks';
-import {
-  encodeQRCodeChunks
-} from '@bitahon/transport';
+import {useTimer} from './hooks';
+import {encodeQRCodeChunks} from '@bitahon/transport';
+
+type QRCodeSVGProps = React.ComponentProps<typeof QRCodeSVG>;
 
 export interface QrCodeSenderProps {
   data: Buffer;
-  mtu?: number | undefined
-  speed?: number
-  size?: number;
-  level?: string;
-  bgColor?: string;
-  fgColor?: string;
+  mtu?: number | undefined;
+  speed?: number;
+  size?: QRCodeSVGProps['size'];
+  level?: QRCodeSVGProps['level'];
+  bgColor?: QRCodeSVGProps['bgColor'];
+  fgColor?: QRCodeSVGProps['fgColor'];
   style?: CSSProperties;
-  includeMargin?: boolean;
 }
 
-export function QrCodeSender({data, size = 250, speed = 1000, mtu, ...rest}: QrCodeSenderProps) {
+export function QrCodeSender({
+  data,
+  size = 250,
+  speed = 1000,
+  mtu,
+  ...rest
+}: QrCodeSenderProps) {
   const [current, setCurrent] = React.useState(0);
   const {run, stop} = useTimer(speed);
 
   const qrcodes = React.useMemo(() => {
     return encodeQRCodeChunks(data, mtu);
-  }, [data, mtu]); 
+  }, [data, mtu]);
 
   React.useEffect(() => {
     if (!qrcodes || qrcodes.length <= 1) {
@@ -43,7 +48,9 @@ export function QrCodeSender({data, size = 250, speed = 1000, mtu, ...rest}: QrC
       stop();
       setCurrent(0);
     };
-  }, [qrcodes, run, stop])
+  }, [qrcodes, run, stop]);
 
-  return qrcodes && qrcodes[current] ? <QRCodeSVG value={qrcodes[current]} size={size} {...rest} /> : null;
+  return qrcodes && qrcodes[current] ? (
+    <QRCodeSVG value={qrcodes[current]} size={size} {...rest} />
+  ) : null;
 }

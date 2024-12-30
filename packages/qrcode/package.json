@@ -38,13 +38,13 @@
   ],
   "dependencies": {
     "@bitahon/transport": "^1.0.0",
-    "@yudiel/react-qr-scanner": "^1.2.10",
-    "qrcode.react": "^3.2.0"
+    "@yudiel/react-qr-scanner": "^2.1.0",
+    "qrcode.react": "^4.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18"
+    "@types/react": "^18 || ^19"
   },
   "peerDependencies": {
-    "react": "^18"
+    "react": "^18 || ^19"
   }
 }

@@ -1,9 +1,13 @@
 import React from 'react';
-import Modal from "@/components/Modal";
+import Modal from '@/components/Modal';
 import Button from '@mui/material/Button';
 import modalQRCode, {PayloadType, ResultType} from './modalQrCode';
-import { useModal } from "@/lib/modals";
-import {QrCodeSender, QrCodeReceiver, QrCodeReceiverProps} from '@bitahon/qrcode';
+import {useModal} from '@/lib/modals';
+import {
+  QrCodeSender,
+  QrCodeReceiver,
+  QrCodeReceiverProps,
+} from '@bitahon/qrcode';
 import {Box, useMediaQuery} from '@mui/material';
 
 function ModalQRCodeTransport() {
@@ -14,7 +18,13 @@ function ModalQRCodeTransport() {
     return null;
   }
 
-  return <ModalQRCodeTransportView close={close} visible={visible} payload={payload} />
+  return (
+    <ModalQRCodeTransportView
+      close={close}
+      visible={visible}
+      payload={payload}
+    />
+  );
 }
 
 export default ModalQRCodeTransport;
@@ -30,16 +40,20 @@ const DialogSx = {
     '@media (max-width: 568px)': {
       margin: 1,
       width: '100%',
-    }
+    },
   },
   '.MuiDialogContent-root': {
     '@media (max-width: 568px)': {
       padding: 1,
-    }
-  }
-}
+    },
+  },
+};
 
-function ModalQRCodeTransportView({visible, close, payload}: ModalQRCodeTransportViewProps) {
+function ModalQRCodeTransportView({
+  visible,
+  close,
+  payload,
+}: ModalQRCodeTransportViewProps) {
   const [step, setStep] = React.useState<'request' | 'response'>('request');
   const matchesSmall = useMediaQuery('(max-width:568px)');
 
@@ -50,43 +64,51 @@ function ModalQRCodeTransportView({visible, close, payload}: ModalQRCodeTranspor
     });
   }, [close]);
 
-  const successHandler = React.useCallback((data: Buffer) => {
-    close({
-      type: 'success',
-      data: data,
-    });
-  }, [close]);
+  const successHandler = React.useCallback(
+    (data: Buffer) => {
+      close({
+        type: 'success',
+        data: data,
+      });
+    },
+    [close],
+  );
 
-  const title = step  === 'request' ?  'QR Code' : 'Scan QR Code';
+  const title = step === 'request' ? 'QR Code' : 'Scan QR Code';
   const showResponse = () => setStep('response');
 
   return (
-    <Modal open={visible} title={title} fullWidth={true}
-      maxWidth={'sm'} 
+    <Modal
+      open={visible}
+      title={title}
+      fullWidth={true}
+      maxWidth={'sm'}
       onClose={closeHandler}
-      footer={step  === 'request' ? (
-        <Button onClick={showResponse}>Next</Button>
-      ): null}
+      footer={
+        step === 'request' ? <Button onClick={showResponse}>Next</Button> : null
+      }
       sx={DialogSx}
     >
-       {step === 'response' ? (
-          <QrCodeReceiverComponent onScanFinish={successHandler} />
-        ) : (
-          <div className="text-center">
-            <QrCodeSender data={payload.data} size={matchesSmall ? 280 : 300} speed={1000} />
-          </div>
-        )}
+      {step === 'response' ? (
+        <QrCodeReceiverComponent onScanFinish={successHandler} />
+      ) : (
+        <div className="text-center">
+          <QrCodeSender
+            data={payload.data}
+            size={matchesSmall ? 280 : 300}
+            speed={1000}
+          />
+        </div>
+      )}
     </Modal>
-  )
+  );
 }
 
 interface QrCodeReceiverComponentProps {
   onScanFinish: QrCodeReceiverProps['onScanFinish'];
 }
 
-function QrCodeReceiverComponent({
-  onScanFinish,
-}: QrCodeReceiverComponentProps) {
+function QrCodeReceiverComponent({onScanFinish}: QrCodeReceiverComponentProps) {
   const [chunksScanned, setChunksScanned] = React.useState<boolean[]>([]);
 
   const progress = React.useMemo(() => {
@@ -98,16 +120,16 @@ function QrCodeReceiverComponent({
     }
     return percent;
   }, [chunksScanned]);
-  
+
   return (
     <>
       <Box sx={{mb: 1}}>{`${progress}%`}</Box>
       <QrCodeReceiver
         onError={(err) => console.error(err)}
         onScanFinish={onScanFinish}
-        onDecode={(res) => console.log('onDecode', res)}
+        onScan={(res) => console.log('onScan', res)}
         onChunksChanged={setChunksScanned}
       />
     </>
-  )
+  );
 }

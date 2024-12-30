@@ -39,7 +39,6 @@ class Manager {
 
   open<T extends Payload>(uid: string, payload?: T) {
     if (!uid) {
-      // eslint-disable-next-line no-console
       console.warn('Modals open: uid is required');
       return;
     }
@@ -49,7 +48,10 @@ class Manager {
     });
   }
 
-  openAsync<T extends Payload, R extends CloseReason>(uid: string, payload?: T): Promise<R> {
+  openAsync<T extends Payload, R extends CloseReason>(
+    uid: string,
+    payload?: T,
+  ): Promise<R> {
     return new Promise((resolver) => {
       this.updateModals(uid, {
         visible: true,
@@ -61,7 +63,6 @@ class Manager {
 
   update<T extends Payload>(uid: string, payload: T) {
     if (!uid) {
-      // eslint-disable-next-line no-console
       console.warn('Modals open: uid is required');
       return;
     }
@@ -74,7 +75,6 @@ class Manager {
 
   close<T extends CloseReason>(uid: string, payload: T) {
     if (!uid) {
-      // eslint-disable-next-line no-console
       console.warn('Modals close: uid is required');
       return;
     }

@@ -10,7 +10,7 @@ interface IProvider {
 const STORAGE_KEY = 'bitahon-session';
 
 const restoreSession = () => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     const session = window.localStorage.getItem(STORAGE_KEY);
     return session ? JSON.parse(session) : null;
   }
@@ -18,7 +18,11 @@ const restoreSession = () => {
 };
 
 const Provider = ({children}: IProvider) => {
-  const [state, setState] = React.useState<IContext['session']>(restoreSession);
+  const [state, setState] = React.useState<IContext['session']>(null);
+
+  React.useEffect(() => {
+    setState(restoreSession());
+  }, []);
 
   const setSession = React.useCallback<IContext['setSession']>((session) => {
     if (session) {
